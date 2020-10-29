@@ -5,14 +5,13 @@ d3.csv("assets/data/data.csv").then( healthData => {
 
   // log a list of names
   var states = healthData.map(data => data.state);
+  var poverty = healthData.map(data => data.poverty);
+  var income = healthData.map(data => data.income);
   console.log("states", states);
+  console.log("poverty", poverty);
+  console.log("income",income);
 
-  // Cast each hours value in tvData as a number using the unary + operator
-  // healthData.forEach( data => {
-  //   data.hours = +data.hours;
-  //   console.log("Name:", data.name);
-  //   console.log("Hours:", data.hours);
-  // });
+  
 }).catch(function(error) {
   console.log(error);
 });
