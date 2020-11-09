@@ -25,12 +25,12 @@ d3.csv("assets/data/data.csv").then( healthData => {
 
     // Step 1: Map data
     // ==============================
-    var stateabbr = healthData.map(data => data.abbr);
-    var poverty = healthData.map(data => data.poverty);
-    var income = healthData.map(data => data.income);
-    console.log("states", stateabbr);
-    console.log("poverty", poverty);
-    console.log("income", income);
+    // var stateabbr = healthData.map(data => data.abbr);
+    // var poverty = healthData.map(data => data.poverty);
+    // var income = healthData.map(data => data.income);
+    // console.log("states", stateabbr);
+    // console.log("poverty", poverty);
+    // console.log("income", income);
 
     healthData.forEach( data => {
       data.income = +data.income;
@@ -74,29 +74,20 @@ d3.csv("assets/data/data.csv").then( healthData => {
     .attr("fill", "pink")
     .attr("opacity", ".5");
 
-    // Step 6: Initialize tool tip
-    // ==============================
-    var toolTip = d3.tip()
-      .attr("class", "tooltip")
-      .offset([80, -60])
-      .html(function(d) {
-        // return (`${d.rockband}<br>Hair length: ${d.hair_length}<br>Hits: ${d.num_hits}`);
-      });
-
-    // Step 7: Create tooltip in the chart
-    // ==============================
-    chartGroup.call(toolTip);
-
-    // Step 8: Create event listeners to display and hide the tooltip
-    // ==============================
-    circlesGroup.on("click", function(data) {
-      toolTip.show(data, this);
-    })
-      // onmouseout event
-      .on("mouseout", function(data, index) {
-        toolTip.hide(data);
-      });
-
+    // append state abbr
+    chartGroup.select("g")
+        .selectAll("circle")
+        .data(healthData)
+        .enter()
+        .append("text")
+        .text(d => d.abbr)
+        .attr("x", d => xLinearScale(d.income))
+        .attr("y", d => yLinearScale(d.poverty))
+        .attr("dy",-395)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .attr("fill", "black");
+    
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
