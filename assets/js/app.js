@@ -30,13 +30,14 @@ d3.csv("assets/data/data.csv").then( healthData => {
     var income = healthData.map(data => data.income);
 
     // Step 2: Create scale functions
+    // Poverty vs Income
     // ==============================
     var xLinearScale = d3.scaleLinear()
-      .domain([20, d3.max(healthData, d => d.hair_length)])
+      .domain([20, d3.max(healthData, d => d.income)])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(healthData, d => d.num_hits)])
+      .domain([0, d3.max(healthData, d => d.poverty)])
       .range([height, 0]);
 
     // Step 3: Create axis functions
