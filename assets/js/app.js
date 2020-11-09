@@ -23,21 +23,20 @@ var chartGroup = svg.append("g")
 // Import Data
 d3.csv("assets/data/data.csv").then( healthData => {
 
-    // Step 1: Parse Data/Cast as numbers
+    // Step 1: Map data
     // ==============================
-    hairData.forEach(function(data) {
-      data.hair_length = +data.hair_length;
-      data.num_hits = +data.num_hits;
-    });
+    var stateabbr = healthData.map(data => data.abbr);
+    var poverty = healthData.map(data => data.poverty);
+    var income = healthData.map(data => data.income);
 
     // Step 2: Create scale functions
     // ==============================
     var xLinearScale = d3.scaleLinear()
-      .domain([20, d3.max(hairData, d => d.hair_length)])
+      .domain([20, d3.max(healthData, d => d.hair_length)])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(hairData, d => d.num_hits)])
+      .domain([0, d3.max(healthData, d => d.num_hits)])
       .range([height, 0]);
 
     // Step 3: Create axis functions
@@ -57,7 +56,7 @@ d3.csv("assets/data/data.csv").then( healthData => {
     // Step 5: Create Circles
     // ==============================
     var circlesGroup = chartGroup.selectAll("circle")
-    .data(hairData)
+    .data(healthData)
     .enter()
     .append("circle")
     .attr("cx", d => xLinearScale(d.hair_length))
